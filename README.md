@@ -1,9 +1,9 @@
-# MineFeaturesLines
+# Mining features lines of source code
 
 ## First steps
 
 * Clone this repository: `git clone https://github.com/GabrielaMichelon/MineFeaturesLines.git`
-* Clone the git reposiritory of the target sytems in a folder on your computer (as an example, LibSSH git repository: https://gitlab.com/libssh/libssh-mirror.git)
+* Clone the Git repository of the target sytem in a folder on your computer (as an example, LibSSH Git repository: https://gitlab.com/libssh/libssh-mirror.git)
 
 
 ## Requires
