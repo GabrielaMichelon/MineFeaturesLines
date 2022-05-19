@@ -20,4 +20,4 @@ You can add jdk and gradle as environmental variables to make easier the script 
   - **Third parameter**: the Git commit hash to analyze
 
 * Type the following command in a command line
-  - gradle run -Pmyargs='\<folder Git repository>','\<results folder>','<Git commit hash>'
+  - gradle run -Pmyargs='\<folder Git repository>','\<results folder>','\<Git commit hash>'
