@@ -2,9 +2,8 @@
 
 ## First steps
 
-* Clone this repository: `git clone [https://github.com/GabrielaMichelon/git-ecco.git](https://github.com/GabrielaMichelon/MineFeaturesLines.git)`
-* Clone the git reposiritory of the target sytems in a folder on your computer
- - For example, LibSSH git repository: https://gitlab.com/libssh/libssh-mirror.git
+* Clone this repository: `git clone https://github.com/GabrielaMichelon/MineFeaturesLines.git`
+* Clone the git reposiritory of the target sytems in a folder on your computer (as an example, LibSSH git repository: https://gitlab.com/libssh/libssh-mirror.git)
 
 
 ## Requires
