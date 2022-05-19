@@ -1,0 +1,17 @@
+rootProject.name = 'git-ecco'
+include 'core'
+include 'featureid'
+include 'translation'
+include 'jcpp'
+include 'challenge'
+include 'gui'
+
+
+project(':core').projectDir = file('core')
+project(':featureid').projectDir = file('featureid')
+project(':translation').projectDir = file('translation')
+project(':jcpp').projectDir = file('jcpp')
+project(':challenge').projectDir = file('challenge')
+project(':gui').projectDir = file('gui')
+
+rootProject.children.each { it.name = rootProject.name + '-' + it.name }

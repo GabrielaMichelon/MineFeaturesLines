@@ -1,0 +1,28 @@
+dependencies {
+
+	// Eclipse JGit
+	compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '5.4.0.201906121030-r'
+//	compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '5.3.0.201903130848-r'
+//  compile 'org.eclipse.jgit:org.eclipse.jgit:4.11.0.201803080745-r'
+//  compile 'org.eclipse.jgit:org.eclipse.jgit.archive:4.11.0.201803080745-r'
+	implementation 'io.github.java-diff-utils:java-diff-utils:2.2.0'
+
+	implementation group: 'commons-io', name: 'commons-io', version: '2.6'
+
+
+	// Eclipse CDT
+//  compile group: 'org.eclipse.osgi', name: 'org.eclipse.osgi', version: '3.7.1'
+//  compile group: 'org.eclipse.core', name: 'org.eclipse.core.resources', version: '3.6.0.v20100526-0737'
+//  compile group: 'org.eclipse.equinox', name: 'org.eclipse.equinox.common', version: '3.6.0.v20100503'
+
+
+	//compile group: 'org.logicng', name: 'logicng', version: '1.5.1'
+
+
+	compile fileTree(dir: 'libs/cdt', include: ['*.jar'])
+	compile fileTree(dir: 'libs/ecco', include: ['*.jar'])
+
+	compile project(':git-ecco-jcpp')
+
+	compile group: 'org.choco-solver', name: 'choco-solver', version: '4.10.1'
+}

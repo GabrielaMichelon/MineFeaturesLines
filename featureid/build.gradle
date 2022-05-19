@@ -1,0 +1,5 @@
+dependencies {
+	compile project(':git-ecco-core')
+
+	compile group: 'com.opencsv', name: 'opencsv', version: '4.0'
+}
