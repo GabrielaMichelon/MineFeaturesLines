@@ -28,8 +28,11 @@ public class MiningFeaturesLines {
     private final static int EVERY_NTH_COMMIT = 1;
     private final static ArrayList<Feature> featureList = new ArrayList<>();
     private final static ArrayList<String> featureNamesList = new ArrayList<String>();
-    private static String REPO_PATH = "";//""C:\\Users\\gabil\\Desktop\\PHD\\Willian\\libssh-mirror";
-    private static String FEATURES_PATH = "";//"C:\\Users\\gabil\\Desktop\\PHD\\Willian\\results2";
+    private static String REPO_PATH = "/Users/willianmendonca/Documents/database/libssh-mirror";
+    private static String FEATURES_PATH = "/Users/willianmendonca/Documents/teste-gradle-Gabi/result";
+
+//    private static String REPO_PATH = "";//""C:\\Users\\gabil\\Desktop\\PHD\\Willian\\libssh-mirror";
+//    private static String FEATURES_PATH = "";//"C:\\Users\\gabil\\Desktop\\PHD\\Willian\\results2";
     static String commit = "c8a621c6063f205e631d83a8ccd4befc60056e93";
     static String fileStoreConfig = "configurations.csv";
     static List<String> changedFiles = new ArrayList<>();
@@ -594,14 +597,14 @@ public class MiningFeaturesLines {
                 }
             }
         }
-
+        File featureCSV = new File(filesFeatureFolder, "feature.csv");
         for (Map.Entry<Feature, ArrayList<String>> feat : filesfeatureMap.entrySet()) {
-            File featureCSV = new File(filesFeatureFolder, feat.getKey().getName() + ".csv");
+//            File featureCSV = new File(filesFeatureFolder, feat.getKey().getName() + ".csv");
             if (!featureCSV.exists()) {
                 try {
                     FileWriter csvWriter = new FileWriter(featureCSV);
                     List<List<String>> headerRows = Arrays.asList(
-                            Arrays.asList("Commit Nr", "File", "From", "To")
+                            Arrays.asList("Commit Nr","File","FeatureName", "From", "To")
                     );
                     for (List<String> rowData : headerRows) {
                         csvWriter.append(String.join(",", rowData));
@@ -618,9 +621,10 @@ public class MiningFeaturesLines {
                 for (String filefeature : feat.getValue()) {
                     String file = filefeature.substring(0, filefeature.indexOf(":"));
                     String to = filefeature.substring(filefeature.indexOf(":") + 1, filefeature.lastIndexOf("-"));
+                    String featurename = feat.getKey().getName();
                     String from = filefeature.substring(filefeature.lastIndexOf("-") + 1);
                     List<List<String>> contentRows = Arrays.asList(
-                            Arrays.asList(Long.toString(commitNr), file, from, to));
+                            Arrays.asList(Long.toString(commitNr), file,featurename, from, to));
                     for (List<String> rowData : contentRows) {
                         csvAppender.append(String.join(",", rowData));
                     }
