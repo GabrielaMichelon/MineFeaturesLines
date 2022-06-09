@@ -28,12 +28,12 @@ public class MiningFeaturesLines {
     private final static int EVERY_NTH_COMMIT = 1;
     private final static ArrayList<Feature> featureList = new ArrayList<>();
     private final static ArrayList<String> featureNamesList = new ArrayList<String>();
-    private static String REPO_PATH = "/Users/willianmendonca/Documents/database/libssh-mirror";
-    private static String FEATURES_PATH = "/Users/willianmendonca/Documents/teste-gradle-Gabi/result";
+    private static String REPO_PATH = "/Users/willianmendonca/Documents/database/sqlite";
+    private static String FEATURES_PATH = "/Users/willianmendonca/Documents/database/result";
 
 //    private static String REPO_PATH = "";//""C:\\Users\\gabil\\Desktop\\PHD\\Willian\\libssh-mirror";
 //    private static String FEATURES_PATH = "";//"C:\\Users\\gabil\\Desktop\\PHD\\Willian\\results2";
-    static String commit = "c8a621c6063f205e631d83a8ccd4befc60056e93";
+    static String commit = "b8bbe3e2db8b0cd12a955de6c10a441301b60e55";
     static String fileStoreConfig = "configurations.csv";
     static List<String> changedFiles = new ArrayList<>();
     static List<String> changedFilesNext = new ArrayList<>();
@@ -604,7 +604,7 @@ public class MiningFeaturesLines {
                 try {
                     FileWriter csvWriter = new FileWriter(featureCSV);
                     List<List<String>> headerRows = Arrays.asList(
-                            Arrays.asList("Commit Nr","File","FeatureName", "From", "To")
+                            Arrays.asList("Commit Nr","TargetFile","FeatureName", "FetFrom", "FetTo")
                     );
                     for (List<String> rowData : headerRows) {
                         csvWriter.append(String.join(",", rowData));
