@@ -1,13 +1,13 @@
 package org.anarres.cpp;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.annotation.Nonnull;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.Collections;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CppReaderTest {
 

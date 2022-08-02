@@ -1,13 +1,12 @@
 package org.anarres.cpp;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
 import static org.anarres.cpp.Token.EOF;
 import static org.anarres.cpp.Token.NUMBER;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -23,7 +22,7 @@ public class NumericValueTest {
         assertEquals(NUMBER, tok.getType());
 
         Token eof = s.token();
-        assertEquals("Didn't get EOF, but " + tok, EOF, eof.getType());
+        assertEquals(EOF, eof.getType(), "Didn't get EOF, but " + tok);
 
         return tok;
     }
@@ -33,10 +32,10 @@ public class NumericValueTest {
         Token tok = testNumericValue(in);
         assertEquals(in, tok.getText());
         NumericValue value = (NumericValue) tok.getValue();
-        assertEquals("Double mismatch", out, value.doubleValue(), 0.01d);
-        assertEquals("Float mismatch", (float) out, value.floatValue(), 0.01f);
-        assertEquals("Long mismatch", (long) out, value.longValue());
-        assertEquals("Integer mismatch", (int) out, value.intValue());
+        assertEquals(out, value.doubleValue(), 0.01d, "Double mismatch");
+        assertEquals((float) out, value.floatValue(), 0.01f, "Float mismatch");
+        assertEquals((long) out, value.longValue(), "Long mismatch");
+        assertEquals((int) out, value.intValue(), "Integer mismatch");
     }
 
     @Test

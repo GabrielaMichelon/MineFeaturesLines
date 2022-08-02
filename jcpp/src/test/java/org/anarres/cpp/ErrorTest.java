@@ -1,12 +1,12 @@
 package org.anarres.cpp;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
 import static org.anarres.cpp.Token.EOF;
 import static org.anarres.cpp.Token.INVALID;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ErrorTest {
 
@@ -47,9 +47,9 @@ public class ErrorTest {
         p.addInput(sl);
         pl = new DefaultPreprocessorListener();
         p.setListener(pl);
-        assertNotNull("CPP has listener", p.getListener());
+        assertNotNull(p.getListener(), "CPP has listener");
         assertTrue(testError(p));
-        assertTrue("Listener has errors", pl.getErrors() > 0);
+        assertTrue(pl.getErrors() > 0, "Listener has errors");
 
         /* Without CSYNTAX, works happily. */
         sl = new StringLexerSource(input, true);

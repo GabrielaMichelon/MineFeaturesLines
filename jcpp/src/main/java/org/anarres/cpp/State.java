@@ -34,6 +34,7 @@ import java.util.List;
         this.active = true;
         this.sawElse = false;
         this.processed = true;
+        this.tokens = new LinkedList<List<Token>>();
     }
 
     /* pp */ State(State parent, List<Token> tokens) {

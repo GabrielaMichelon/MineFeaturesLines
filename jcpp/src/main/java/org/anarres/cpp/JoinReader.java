@@ -146,7 +146,7 @@ import java.io.Reader;
                     int d = _read();
                     /**
                      * sFischer
-                     * added this to avoid error in multiline macros, if the have whitespaces after \
+                     * added this to avoid error in multiline macros, if they have whitespaces after \
                      */
                     while(Character.isWhitespace(d) && !(d == '\n') && !(d == '\r')){
                         d = _read();

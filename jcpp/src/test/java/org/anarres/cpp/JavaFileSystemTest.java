@@ -1,11 +1,10 @@
 package org.anarres.cpp;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JavaFileSystemTest {
 
@@ -19,9 +18,9 @@ public class JavaFileSystemTest {
         try {
             f.getSource();	/* drop on floor */
 
-            assertTrue("Got a source for a non-file", f.isFile());
+            assertTrue(f.isFile(), "Got a source for a non-file");
         } catch (FileNotFoundException e) {
-            assertFalse("Got no source for a file", f.isFile());
+            assertFalse(f.isFile(), "Got no source for a file");
         }
 
         /* We hope we have this. */
@@ -30,10 +29,10 @@ public class JavaFileSystemTest {
             f.getSource();	/* drop on floor */
 
             System.out.println("Opened stdio.h");
-            assertTrue("Got a source for a non-file", f.isFile());
+            assertTrue(f.isFile(), "Got a source for a non-file");
         } catch (FileNotFoundException e) {
             System.out.println("Failed to open stdio.h");
-            assertFalse("Got no source for a file", f.isFile());
+            assertFalse(f.isFile(), "Got no source for a file");
         }
 
     }

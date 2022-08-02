@@ -58,9 +58,9 @@ public class Main {
         OptionSpec<?> helpOption = parser.accepts("help",
                 "Displays command-line help.")
                 .forHelp();
-        OptionSpec<?> versionOption = parser.acceptsAll(Arrays.asList("version"),
-                "Displays the product version (" + BuildMetadata.getInstance().getVersion() + ") and exits.")
-                .forHelp();
+//        OptionSpec<?> versionOption = parser.acceptsAll(Arrays.asList("version"),
+//                "Displays the product version (" + BuildMetadata.getInstance().getVersion() + ") and exits.")
+//                .forHelp();
 
         OptionSpec<?> debugOption = parser.acceptsAll(Arrays.asList("debug"),
                 "Enables debug output.");
@@ -95,10 +95,10 @@ public class Main {
             return;
         }
 
-        //if (options.has(versionOption)) {
-         //   version(System.out);
-        //    return;
-        //}
+//        if (options.has(versionOption)) {
+//            version(System.out);
+//            return;
+//        }
 
         Preprocessor pp = new Preprocessor();
         pp.addFeature(Feature.DIGRAPHS);

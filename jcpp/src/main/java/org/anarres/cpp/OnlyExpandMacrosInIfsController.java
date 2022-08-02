@@ -1,15 +1,10 @@
 package org.anarres.cpp;
 
-import org.anarres.cpp.featureExpr.FeatureExpression;
-import org.anarres.cpp.featureExpr.FeatureExpressionParser;
-import org.anarres.cpp.featureExpr.MacroCall;
-import org.anarres.cpp.featureExpr.PostOrderTraversal;
+import org.anarres.cpp.featureExpr.*;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class OnlyExpandMacrosInIfsController extends PreprocessorControlListener {
 
@@ -68,9 +63,9 @@ public class OnlyExpandMacrosInIfsController extends PreprocessorControlListener
         }
 
         public void postVisit(FeatureExpression visitedExpr) {
-            if (visitedExpr instanceof MacroCall) {
+            if(visitedExpr instanceof MacroCall){
                 String macroName = ((MacroCall) visitedExpr).getName().toString();
-                if (!macroName.equals("defined")) {
+                if(!macroName.equals("defined")) {
                     try {
                         List<Token> expanded = pp.expand(visitedExpr.toString());
 

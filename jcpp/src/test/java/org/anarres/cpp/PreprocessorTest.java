@@ -1,7 +1,7 @@
 package org.anarres.cpp;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,8 +11,8 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
 import static org.anarres.cpp.Token.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class PreprocessorTest {
 
@@ -21,7 +21,7 @@ public class PreprocessorTest {
     private OutputStreamWriter writer;
     private Preprocessor p;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         final PipedOutputStream po = new PipedOutputStream();
         writer = new OutputStreamWriter(po);
@@ -209,7 +209,7 @@ public class PreprocessorTest {
     public static void assertType(int type, Token t) {
         String typeExpect = TokenType.getTokenName(type);
         String typeActual = TokenType.getTokenName(t.getType());
-        assertEquals("Expected " + typeExpect + " but got " + typeActual, type, t.getType());
+        assertEquals(type,  t.getType(), "Expected " + typeExpect + " but got " + typeActual);
     }
 
     private void testInput(String in, Object... out)

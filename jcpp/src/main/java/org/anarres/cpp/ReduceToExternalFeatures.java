@@ -439,24 +439,19 @@ public class ReduceToExternalFeatures extends PreprocessorControlListener {
                 //check for macro defined here, for macros that may be undefined conditionally
                 if(condition == null){
                     if(macroName.equals("defined")){
-//                        if (!containsFeature(visitedExpr)) {
-                            if (visitedExpr instanceof MacroCall) {
-                                FeatureExpression arg = ((MacroCall) visitedExpr).getArguments().get(0);
-                                if (arg instanceof Name) {
-                                    String cond = combination.get(arg.toString());
-                                    if(cond != null) {
-                                        Macro m = macros.get(arg.toString()).get(cond);
-                                        if(m != null) {
-//                                            FeatureExpressionParser parser = new FeatureExpressionParser(cond);
-//                                            FeatureExpression condExpr = parser.parse();
-//                                            replace(visitedExpr, condExpr);
-                                            replace(visitedExpr, new FeatureExpressionParser("1").parse());
-                                        } else {
-                                            replace(visitedExpr, new FeatureExpressionParser("0").parse());
-                                        }
+                        if (visitedExpr instanceof MacroCall) {
+                            FeatureExpression arg = ((MacroCall) visitedExpr).getArguments().get(0);
+                            if (arg instanceof Name) {
+                                String cond = combination.get(arg.toString());
+                                if(cond != null) {
+                                    Macro m = macros.get(arg.toString()).get(cond);
+                                    if(m != null) {
+                                        replace(visitedExpr, new FeatureExpressionParser("1").parse());
+                                    } else {
+                                        replace(visitedExpr, new FeatureExpressionParser("0").parse());
                                     }
                                 }
-//                            }
+                            }
                         }
                     } else {
                         try {

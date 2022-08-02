@@ -9,9 +9,8 @@ import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
 import com.google.common.io.PatternFilenameFilter;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,44 +18,36 @@ import java.io.File;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.params.ParameterizedTest;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
  * @author shevek
  */
-@RunWith(Parameterized.class)
 public class RegressionTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RegressionTest.class);
 
-    @Parameterized.Parameters(name = "{0}")
-    public static List<Object[]> data() throws Exception {
-        List<Object[]> out = new ArrayList<Object[]>();
+    public static Stream<Arguments> data() throws Exception {
+        List<Arguments> out = new ArrayList<>();
 
-        File dir = new File("build/resources/test/regression");
+        File dir = new File("src/test/resources/regression");
         for (File inFile : dir.listFiles(new PatternFilenameFilter(".*\\.in"))) {
             String name = Files.getNameWithoutExtension(inFile.getName());
             File outFile = new File(dir, name + ".out");
-            out.add(new Object[]{name, inFile, outFile});
+            out.add(Arguments.of(name, inFile, outFile));
         }
 
-        return out;
+        return out.stream();
     }
 
-    private final String name;
-    private final File inFile;
-    private final File outFile;
-
-    public RegressionTest(String name, File inFile, File outFile) {
-        this.name = name;
-        this.inFile = inFile;
-        this.outFile = outFile;
-    }
-
-    @Test
-    public void testRegression() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testRegression(String name, File inFile, File outFile) throws Exception {
         String inText = Files.toString(inFile, Charsets.UTF_8);
         LOG.info("Read " + name + ":\n" + inText);
         CppReader cppReader = new CppReader(new StringReader(inText));

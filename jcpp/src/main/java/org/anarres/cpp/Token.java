@@ -72,8 +72,6 @@ public final class Token {
         this.column = column;
     }
 
-
-
     /**
      * Returns the line at which this token started.
      *

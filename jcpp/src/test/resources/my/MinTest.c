@@ -19,6 +19,30 @@
 
 #define ADD(a, b) (a + b)
 
+#define _CAT(a, ...) a ## __VA_ARGS__
+
+#if _CAT(1, 0)
+#endif
+
+#if defined SDSUPPORT
+#endif
+
+#define UART_ISR(uart_) \
+ADD(uart_, uart_) \
+{ \
+  unsigned char c = 0##uart_; \
+  \
+  int i = uart_ + 1; \
+  \
+  /* if we should be storing the received character into the location \
+     just before the tail (meaning that the head would advance to the \
+     current location of the tail), we're about to overflow the buffer \
+     and so we don't write the character or advance the head. */ \
+  if (i != uart_) { \
+    int c = i; \
+  } \
+}
+
 #if MAX(2, 3) < 10 && \
 	ADD(3, 4) < 10
 

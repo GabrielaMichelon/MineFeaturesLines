@@ -494,7 +494,7 @@ public class Preprocessor implements Closeable {
      * included by this Preprocessor.
      * <p>
      * This does not include any {@link Source} provided to the constructor
-     * or {@link #addInput(java.io.File)} or {@link #addInput(Source)}.
+     * or {@link #addInput(File)} or {@link #addInput(Source)}.
      */
     @Nonnull
     public List<? extends VirtualFile> getIncludes() {
@@ -1202,6 +1202,17 @@ public class Preprocessor implements Closeable {
         if (!file.isFile())
             return false;
 
+        /** sFischer
+         * added code to catch files including themselves, leads to a OutOfMemoryException otherwise
+         */
+        Source fileSource = file.getSource();
+        if(fileSource instanceof  FileLexerSource && this.source instanceof FileLexerSource){
+            if(((FileLexerSource) fileSource).getFile().equals(((FileLexerSource) this.source).getFile())){
+                System.out.println("[Warning] #include in primary source file " + ((FileLexerSource) fileSource).getFile().getAbsolutePath());
+                return true;
+            }
+        }
+
         if (getFeature(Feature.DEBUG))
             LOG.debug("pp: including " + file);
         includes.add(file);
@@ -1271,8 +1282,7 @@ public class Preprocessor implements Closeable {
                     return;
             }
         }
-       // if(!sysincludepath.contains("C:\\Users\\gabil\\Desktop\\ECCO_Work\\TestMarlin\\Marlin\\Marlin\\Marlin\\Marlin"))
-        //    sysincludepath.add("C:\\Users\\gabil\\Desktop\\ECCO_Work\\TestMarlin\\Marlin\\Marlin\\Marlin\\Marlin");
+
         if (include(sysincludepath, name))
             return;
 
@@ -1699,7 +1709,8 @@ public class Preprocessor implements Closeable {
 
             default:
                 expr_untoken(tok);
-                //error(tok,"Bad token in expression: " + tok.getText());
+                error(tok,
+                        "Bad token in expression: " + tok.getText());
                 return 0;
         }
 
@@ -2000,15 +2011,9 @@ public class Preprocessor implements Closeable {
                     if (getFeature(Feature.CSYNTAX))
                         error(tok, String.valueOf(tok.getValue()));
                     return tok;
+
                 default:
-                    if(tok.getType() == PASTE)
-                        return tok;
-                    else if(tok.getText().equals("#"))
-                        return tok;
-                    else if (tok.getText().equals("\\"))
-                        return tok;
-                    else
-                        throw new InternalException("Bad token " + tok);
+                    throw new InternalException("Bad token " + tok);
                     // break;
 
                 case HASH:
@@ -2039,7 +2044,7 @@ public class Preprocessor implements Closeable {
                     List<Token> ppTokens = new LinkedList<Token>();
                     Token ppTok = tok;
                     if (ppcmd == PP_IF || ppcmd == PP_IFDEF || ppcmd == PP_IFNDEF || ppcmd == PP_ELIF || ppcmd == PP_ELSE || ppcmd == PP_ENDIF) {
-                        while (ppTok.getType() != NL && ppTok.getType() != EOF) { //&& ppTok.getType() != EOF
+                        while (ppTok.getType() != NL) {
                             if (!ppTok.getText().equals("\r")) {
                                 ppTokens.add(ppTok);
                             }

@@ -28,12 +28,15 @@ public class MiningFeaturesLines {
     private final static int EVERY_NTH_COMMIT = 1;
     private final static ArrayList<Feature> featureList = new ArrayList<>();
     private final static ArrayList<String> featureNamesList = new ArrayList<String>();
-    private static String REPO_PATH = "/Users/willianmendonca/Documents/database/sqlite";
-    private static String FEATURES_PATH = "/Users/willianmendonca/Documents/database/result";
+    private static String REPO_PATH = //"C:\\Users\\gabil\\Desktop\\PHD\\Willian\\StefanFischer\\dune-common\\dune-common";//
+     "C:\\Users\\gabil\\Desktop\\PHD\\Willian\\StefanFischer\\xorg-xserver\\xorg-xserver";//"C:\\Users\\gabil\\Desktop\\PHD\\Willian\\StefanFischer\\wiredtiger\\wiredtiger";//"C:\\Users\\gabil\\Desktop\\PHD\\Willian\\StefanFischer\\glibc\\glibc";
+    private static String FEATURES_PATH = //"C:\\Users\\gabil\\Desktop\\PHD\\Willian\\StefanFischer\\dune-common\\results";//
+     "C:\\Users\\gabil\\Desktop\\PHD\\Willian\\StefanFischer\\xorg-xserver\\results";//"C:\\Users\\gabil\\Desktop\\PHD\\Willian\\StefanFischer\\wiredtiger\\results";//"C:\\Users\\gabil\\Desktop\\PHD\\Willian\\StefanFischer\\glibc\\results";
 
 //    private static String REPO_PATH = "";//""C:\\Users\\gabil\\Desktop\\PHD\\Willian\\libssh-mirror";
 //    private static String FEATURES_PATH = "";//"C:\\Users\\gabil\\Desktop\\PHD\\Willian\\results2";
-    static String commit = "b8bbe3e2db8b0cd12a955de6c10a441301b60e55";
+    static String commit = //"c6c8914844da7b4e3f0fb3b14802fbf5f886ed60";//
+     "11beef0b7f1ed290348e45618e5fa0d2bffcb72e";//"39a851a26aaeba41594fe6725f028b81fddc2f0a";//"0c5605989f72457b50e4eccad3e99a28929d89ba";
     static String fileStoreConfig = "configurations.csv";
     static List<String> changedFiles = new ArrayList<>();
     static List<String> changedFilesNext = new ArrayList<>();

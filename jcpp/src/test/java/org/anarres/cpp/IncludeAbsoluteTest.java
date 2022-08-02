@@ -1,14 +1,14 @@
 package org.anarres.cpp;
 
 import com.google.common.io.CharStreams;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.Reader;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -20,10 +20,10 @@ public class IncludeAbsoluteTest {
 
     @Test
     public void testAbsoluteInclude() throws Exception {
-        File file = new File("build/resources/test/absolute.h");
+        File file = new File("src/test/resources/absolute.h");
         assertTrue(file.exists());
 
-        String input = "#include <" + file.getAbsolutePath() + ">\n";
+        String input = "#include <" + file.getAbsolutePath().replace('\\', '/') + ">\n";
         LOG.info("Input: " + input);
         Preprocessor pp = new Preprocessor();
         pp.addInput(new StringLexerSource(input, true));

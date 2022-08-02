@@ -15,24 +15,24 @@ public class FeatureExpressionParser {
 
     private Token la;
 
-    public FeatureExpressionParser(Source source) {
+    public FeatureExpressionParser(Source source){
         this.source = source;
     }
 
-    public FeatureExpressionParser(List<Token> tokens) {
+    public FeatureExpressionParser(List<Token> tokens){
         this(new FixedTokenSource(tokens));
     }
 
-    public FeatureExpressionParser(String expression) {
+    public FeatureExpressionParser(String expression){
         this(new StringLexerSource(expression));
     }
 
-    public FeatureExpression parse() {
+    public FeatureExpression parse(){
         scan();
         return Expr();
     }
 
-    private Token token() {
+    private Token token(){
         try {
             Token tok = source.nextToken();
             while (tok.getType() == Token.WHITESPACE || tok.getType() == Token.CCOMMENT || tok.getType() == Token.CPPCOMMENT) {
@@ -47,33 +47,30 @@ public class FeatureExpressionParser {
         return null;
     }
 
-    private void scan() {
-        t = la;
-        la = token();
+    private void scan(){
+        t = la; la = token();
     }
 
-    private void check(int type) {
-        if (la.getType() == type) {
+    private void check(int type){
+        if(la.getType() == type){
             scan();
-        } else if(la.getText().contains("b4_location_if") || la.getText().contains("b4_locations_if") || la.getText().contains("<eof>")|| la.getText().contains("b4_api_PREFIX")) {
-            System.out.println("!!!!!!");
-        }else {
+        } else {
             error("Expected " + type + " but was: " + la);
         }
     }
 
-    private void error(String msg) {
+    private void error(String msg){
         throw new InternalException(msg);
     }
 
-    private FeatureExpression Expr() {
+    private FeatureExpression Expr(){
         return AssignExpr();
     }
 
-    private FeatureExpression AssignExpr() {
+    private FeatureExpression AssignExpr(){
         FeatureExpression lhs = CondExpr();
         Token op = AssignOp();
-        if (op != null) {
+        if(op != null){
             scan();
             FeatureExpression rhs = CondExpr();
             return new AssignExpr(lhs, new SingleTokenExpr(op), rhs);
@@ -81,8 +78,8 @@ public class FeatureExpressionParser {
         return lhs;
     }
 
-    private Token AssignOp() {
-        if (la.getType() == '='
+    private Token AssignOp(){
+        if(la.getType() == '='
                 || la.getType() == Token.PLUS_EQ
                 || la.getType() == Token.SUB_EQ
                 || la.getType() == Token.MULT_EQ
@@ -94,16 +91,16 @@ public class FeatureExpressionParser {
                 || la.getType() == Token.LAND_EQ
                 || la.getType() == Token.LOR_EQ
                 || la.getType() == Token.LSH_EQ
-                || la.getType() == Token.RSH_EQ) {
+                || la.getType() == Token.RSH_EQ){
 
             return la;
         }
         return null;
     }
 
-    private FeatureExpression CondExpr() {
+    private FeatureExpression CondExpr(){
         FeatureExpression expr = LogOrExpr();
-        if (la.getType() == '?') {
+        if(la.getType() == '?'){
             scan();
             FeatureExpression thenExpr = Expr();
             check(':');
@@ -113,9 +110,9 @@ public class FeatureExpressionParser {
         return expr;
     }
 
-    private FeatureExpression LogOrExpr() {
+    private FeatureExpression LogOrExpr(){
         FeatureExpression lhs = LogAndExpr();
-        while (la.getType() == Token.LOR) {
+        while(la.getType() == Token.LOR){
             SingleTokenExpr op = new SingleTokenExpr(la);
             scan();
             FeatureExpression rhs = LogAndExpr();
@@ -124,9 +121,9 @@ public class FeatureExpressionParser {
         return lhs;
     }
 
-    private FeatureExpression LogAndExpr() {
+    private FeatureExpression LogAndExpr(){
         FeatureExpression lhs = OrExpr();
-        while (la.getType() == Token.LAND) {
+        while(la.getType() == Token.LAND){
             SingleTokenExpr op = new SingleTokenExpr(la);
             scan();
             FeatureExpression rhs = OrExpr();
@@ -135,9 +132,9 @@ public class FeatureExpressionParser {
         return lhs;
     }
 
-    private FeatureExpression OrExpr() {
+    private FeatureExpression OrExpr(){
         FeatureExpression lhs = XorExpr();
-        while (la.getType() == '|') {
+        while(la.getType() == '|'){
             SingleTokenExpr op = new SingleTokenExpr(la);
             scan();
             FeatureExpression rhs = XorExpr();
@@ -146,9 +143,9 @@ public class FeatureExpressionParser {
         return lhs;
     }
 
-    private FeatureExpression XorExpr() {
+    private FeatureExpression XorExpr(){
         FeatureExpression lhs = AndExpr();
-        while (la.getType() == '^') {
+        while(la.getType() == '^'){
             SingleTokenExpr op = new SingleTokenExpr(la);
             scan();
             FeatureExpression rhs = AndExpr();
@@ -157,9 +154,9 @@ public class FeatureExpressionParser {
         return lhs;
     }
 
-    private FeatureExpression AndExpr() {
+    private FeatureExpression AndExpr(){
         FeatureExpression lhs = EqlExpr();
-        while (la.getType() == '&') {
+        while(la.getType() == '&'){
             SingleTokenExpr op = new SingleTokenExpr(la);
             scan();
             FeatureExpression rhs = EqlExpr();
@@ -168,9 +165,9 @@ public class FeatureExpressionParser {
         return lhs;
     }
 
-    private FeatureExpression EqlExpr() {
+    private FeatureExpression EqlExpr(){
         FeatureExpression lhs = RelExpr();
-        while (la.getType() == Token.EQ || la.getType() == Token.NE) {
+        while(la.getType() == Token.EQ || la.getType() == Token.NE){
             SingleTokenExpr op = new SingleTokenExpr(la);
             scan();
             FeatureExpression rhs = RelExpr();
@@ -179,9 +176,9 @@ public class FeatureExpressionParser {
         return lhs;
     }
 
-    private FeatureExpression RelExpr() {
+    private FeatureExpression RelExpr(){
         FeatureExpression lhs = ShiftExpr();
-        while (la.getType() == '<' || la.getType() == '>' || la.getType() == Token.GE || la.getType() == Token.LE) {
+        while(la.getType() == '<' || la.getType() == '>' || la.getType() == Token.GE || la.getType() == Token.LE){
             SingleTokenExpr op = new SingleTokenExpr(la);
             scan();
             FeatureExpression rhs = ShiftExpr();
@@ -190,9 +187,9 @@ public class FeatureExpressionParser {
         return lhs;
     }
 
-    private FeatureExpression ShiftExpr() {
+    private FeatureExpression ShiftExpr(){
         FeatureExpression lhs = AddExpr();
-        while (la.getType() == Token.LSH || la.getType() == Token.RSH) {
+        while(la.getType() == Token.LSH || la.getType() == Token.RSH){
             SingleTokenExpr op = new SingleTokenExpr(la);
             scan();
             FeatureExpression rhs = AddExpr();
@@ -201,9 +198,9 @@ public class FeatureExpressionParser {
         return lhs;
     }
 
-    private FeatureExpression AddExpr() {
+    private FeatureExpression AddExpr(){
         FeatureExpression lhs = MultExpr();
-        while (la.getType() == '+' || la.getType() == '-') {
+        while(la.getType() == '+' || la.getType() == '-'){
             SingleTokenExpr op = new SingleTokenExpr(la);
             scan();
             FeatureExpression rhs = MultExpr();
@@ -212,9 +209,9 @@ public class FeatureExpressionParser {
         return lhs;
     }
 
-    private FeatureExpression MultExpr() {
+    private FeatureExpression MultExpr(){
         FeatureExpression lhs = UnaryExpr();
-        while (la.getType() == '*' || la.getType() == '/' || la.getType() == '%') {
+        while(la.getType() == '*' || la.getType() == '/' || la.getType() == '%'){
             SingleTokenExpr op = new SingleTokenExpr(la);
             scan();
             FeatureExpression rhs = UnaryExpr();
@@ -223,38 +220,34 @@ public class FeatureExpressionParser {
         return lhs;
     }
 
-    private FeatureExpression UnaryExpr() {
-        if (la.getType() == Token.INC || la.getType() == Token.DEC) {
+    private FeatureExpression UnaryExpr(){
+        if(la.getType() == Token.INC || la.getType() == Token.DEC){
             SingleTokenExpr op = new SingleTokenExpr(la);
             scan();
             FeatureExpression expr = UnaryExpr();
             return new PrefixExpr(op, expr);
-        } else if (la.getType() == '&' || la.getType() == '*' || la.getType() == '+' || la.getType() == '-' || la.getType() == '~' || la.getType() == '!') {
+        } else if(la.getType() == '&' || la.getType() == '*' || la.getType() == '+' || la.getType() == '-' || la.getType() == '~' || la.getType() == '!'){
             SingleTokenExpr op = new SingleTokenExpr(la);
             scan();
             FeatureExpression expr = UnaryExpr();
             return new PrefixExpr(op, expr);
-        } else {
+        } else  {
             return PostfixExpr();
         }
     }
 
-    private FeatureExpression PostfixExpr() {
+    private FeatureExpression PostfixExpr(){
         FeatureExpression lastExpr = Primary();
-        if (lastExpr instanceof Name && ((Name) lastExpr).getToken().getText().equals("defined") && la.getType() == Token.IDENTIFIER) {
+        if(lastExpr instanceof Name && ((Name) lastExpr).getToken().getText().equals("defined") && la.getType() == Token.IDENTIFIER){
             MacroCall call = MacroCall(lastExpr);
             lastExpr = call;
         } else {
-            while (la.getType() == '[' || la.getType() == ']' || la.getType() == '.' || la.getType() == Token.ARROW || la.getType() == '(' || la.getType() == Token.INC || la.getType() == Token.DEC) {
+            while (la.getType() == '[' || la.getType() == '.' || la.getType() == Token.ARROW || la.getType() == '(' || la.getType() == Token.INC || la.getType() == Token.DEC) {
                 if (la.getType() == '[') {
                     scan();
                     FeatureExpression index = Expr();
+                    check(']');
                     lastExpr = new ArrayAccess(lastExpr, index);
-                } else if (la.getType() == ']') {
-                    SingleTokenExpr op = new SingleTokenExpr(la);
-                    scan();
-                    check(Token.IDENTIFIER);
-                    lastExpr = new Pointer(lastExpr, op, new Name(t));
                 } else if (la.getType() == '.') {
                     SingleTokenExpr op = new SingleTokenExpr(la);
                     scan();
@@ -286,44 +279,34 @@ public class FeatureExpressionParser {
         return lastExpr;
     }
 
-
-    private FeatureExpression Primary() {
-        if (la.getType() == Token.IDENTIFIER) {
+    private FeatureExpression Primary(){
+        if(la.getType() == Token.IDENTIFIER){
             scan();
             return new Name(t);
-        } else if (la.getType() == Token.NUMBER) {
+        } else if(la.getType() == Token.NUMBER){
             scan();
             return new NumberLiteral(t);
-        } else if (la.getType() == Token.CHARACTER) {
+        } else if(la.getType() == Token.CHARACTER){
             scan();
             return new CharacterLiteral(t);
-        } else if (la.getType() == Token.STRING) {
+        } else if(la.getType() == Token.STRING){
             scan();
             return new StringLiteral(t);
-        } else if (la.getType() == '(') {
+        } else if(la.getType() == '('){
             scan();
             FeatureExpression expr = Expr();
             check(')');
             return new ParenthesizedExpr(expr);
-        } else if (la.getType() == ')') {
-            scan();
-            return new CharacterLiteral(t);
-        } else if (la.getType() == ']') {
-            scan();
-            return new Name(t);
-        } else if (la.getType() == '[') {
-            scan();
-            return new Name(t);
         }
         error("Expected Primary but was: " + la);
         return null;
     }
 
-    private MacroCall MacroCall(FeatureExpression name) {
+    private MacroCall MacroCall(FeatureExpression name){
         Name n = (Name) name;
         List<FeatureExpression> arguments = new LinkedList<FeatureExpression>();
         arguments.add(AssignExpr());
-        while (la.getType() == ',') {
+        while(la.getType() == ','){
             scan();
             arguments.add(AssignExpr());
         }

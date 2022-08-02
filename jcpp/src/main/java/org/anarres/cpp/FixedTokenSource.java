@@ -38,10 +38,6 @@ import java.util.List;
         this.idx = 0;
     }
 
-    public List<Token> getTokens() {
-        return tokens;
-    }
-
     @Override
     public Token nextToken()
             throws IOException,
