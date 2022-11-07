@@ -3,23 +3,35 @@ package org.anarres.cpp;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
 public class PreprocessorAPITests {
 
-    private static final String SRC = "src\\test\\resources\\my";
+//    private static final String SRC = "src\\test\\resources\\my";
 //    private static final String SRC = "src\\test\\resources\\my\\MinTest.c";
 
-    private static final String TARGET = "processed";
+//    private static final String TARGET = "processed";
 
-//    private static final String cfile = "C:\\Users\\sfischer\\Desktop\\JKU\\systems\\glibc";
-//    private static final String TARGET = "C:\\Users\\sfischer\\Desktop\\JKU\\systems\\processed\\glibc";
+    private static final String SRC = "C:\\Users\\sfischer\\Desktop\\JKU\\systems\\glibc";
+    private static final String TARGET = "C:\\Users\\sfischer\\Desktop\\JKU\\systems\\processed\\glibc";
+
+//    private static final String SRC = "C:\\Users\\sfischer\\Desktop\\JKU\\systems\\wiredtiger";
+//    private static final String TARGET = "C:\\Users\\sfischer\\Desktop\\JKU\\systems\\processed\\wiredtiger";
+
+//    private static final String SRC = "C:\\Users\\sfischer\\Desktop\\JKU\\systems\\xorg-xserver";
+//    private static final String TARGET = "C:\\Users\\sfischer\\Desktop\\JKU\\systems\\processed\\xorg-xserver";
+
+//    private static final String SRC = "C:\\Users\\sfischer\\Desktop\\JKU\\systems\\dune-common";
+//    private static final String TARGET = "C:\\Users\\sfischer\\Desktop\\JKU\\systems\\processed\\dune-common";
 
     private static final Stream<String> SYSTEM_INCLUDE_PATHS = Stream.of(
-            "C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include",
-            "C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/ssp"
+//            "C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include",
+//            "C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/ssp",
+            "C:\\Users\\sfischer\\Desktop\\JKU\\usr_include"
     );
 
     @Test
@@ -37,7 +49,7 @@ public class PreprocessorAPITests {
         File src = new File(SRC);
         File target = new File(TARGET);
 
-        pp.preprocess(src, target);
+        pp.preprocess(src, target, null, "");
     }
 
     /**
@@ -58,7 +70,7 @@ public class PreprocessorAPITests {
         pp.setKeepIncludes(true);
         pp.setKeepDefines(true);
 
-        pp.preprocess(src, target);
+        pp.preprocess(src, target, null, "");
     }
 
     @Test
@@ -86,10 +98,9 @@ public class PreprocessorAPITests {
 
         //if you use this the preprocessor will be executed in debug mode
 //        pp.debug();
-
         //src file or directory
         //target directory
-        pp.preprocess(src, target);
+        pp.preprocess(src, target, null, "");
     }
 
     @Test
@@ -117,13 +128,12 @@ public class PreprocessorAPITests {
 
         File src = new File(SRC);
         File target = new File(TARGET);
-
         //if you use this the preprocessor will be executed in debug mode
 //        pp.debug();
 
         //src file or directory
         //target directory
-        pp.preprocess(src, target);
+        pp.preprocess(src, target, null, "");
 
         controller.printMacros();
     }

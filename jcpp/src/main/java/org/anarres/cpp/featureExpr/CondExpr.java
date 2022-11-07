@@ -80,7 +80,7 @@ public class CondExpr extends FeatureExpression{
             return true;
         }
         if(child == this.thenExpr){
-            setThenExpr((SingleTokenExpr)newChild);
+            setThenExpr(newChild);
             return true;
         }
         if(child == this.elseExpr){

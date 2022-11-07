@@ -511,11 +511,11 @@ public class Preprocessor implements Closeable {
         states.push(new State(top, tokens));
     }
 
-    private void pop_state()
+    private void pop_state(Token tok)
             throws LexerException {
         State s = states.pop();
         if (states.isEmpty()) {
-            error(0, 0, "#" + "endif without #" + "if");
+            error(tok.getLine(), tok.getColumn(), "#" + "endif without #" + "if");
             states.push(s);
         }
     }
@@ -1953,6 +1953,10 @@ public class Preprocessor implements Closeable {
                 case '~':
                 case '.':
 
+                    /* From Stefan Fischer for glibc */
+                case '\\':
+                case '#':
+
                     /* From Olivier Chafik for Objective C? */
                 case '@':
                     /* The one remaining ASCII, might as well. */
@@ -2345,7 +2349,7 @@ public class Preprocessor implements Closeable {
 
                         case PP_ENDIF:
                             state = states.peek();
-                            pop_state();
+                            pop_state(tok);
                             if (!state.isProcessed()) {
                                 push_source(new UnprocessedFixedTokenSource(ppTokens), true);
                                 return hash;

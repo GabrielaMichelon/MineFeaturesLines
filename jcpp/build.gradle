@@ -25,6 +25,6 @@ dependencies {
 	testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
 }
 
-test {
-	useJUnitPlatform()
-}
+//test {
+	//useJUnitPlatform()
+//}
